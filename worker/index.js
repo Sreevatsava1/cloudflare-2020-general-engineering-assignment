@@ -6,7 +6,6 @@ const links = [
 
 
 
-
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request))
 })
@@ -14,8 +13,10 @@ addEventListener('fetch', event => {
  * Respond with hello worker text
  * @param {Request} request
  */
+
 async function handleRequest(request) {
-  return new Response('Hello worker!', {
-    headers: { 'content-type': 'text/plain' },
-  })
+  const path = new URL(request.url).pathname
+  if(path == '/links')  {
+    return new Response(JSON.stringify(links), {headers:{'content-type':'application/json'}})
+  }
 }
